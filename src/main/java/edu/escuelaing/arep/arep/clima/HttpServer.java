@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+* La clase HttpServer es la principal clase de api que utliza Open Weather Map para dar el tiempo de cierta ciudad.
+*
+*/
 public class HttpServer {
 
     private static final HttpServer _instance = new HttpServer();
