@@ -95,37 +95,6 @@ public class HttpServer {
         return computeHTMLResponse(filename);
     }
 
-    private String getComponentResource(String uri) throws IOException {
-        if (uri.contains("clima")) {
-            return defaultHttpMessage();
-        } else if (uri.contains("consulta")) {
-            return computeContentComponentResponse(uri);
-        } else {
-            return default404HTMLResponse();
-        }
-    }
-
-    private String computeContentComponentResponse(String uri) {
-        return null;
-    }
-
-    private String default404HTMLResponse() {
-        String outputLine = "HTTP/1.1 404 Not found\r\n" + "Content-Type: text/html\r\n" + "\r\n" + "<!DOCTYPE html>"
-                + "<html>" + " <head>" + "     <title>404 Not Found </title>" + "     <meta charset=\"UTF-8\""
-                + "     <meta name=\"viewport\"" + " </head>" + "<body>" + "     <div><h1>Error 404</h1></div>"
-                + " </body>" + "</html>";
-        return outputLine;
-    }
-
-    private String defaultHttpMessage() {
-        String outputLine = "HTTP/1.1 200 ok\r\n" + "Content-Type: text/html\r\n" + "\r\n" + "<!DOCTYPE html>"
-                + " <html>" + "     <head>" + "         <title> TODO supply a title </title>"
-                + "         <meta charset=\"UTF-8\""
-                + "         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"" + "     </head>"
-                + "     <body>" + "         <div><h1>The Weather</h1></div>" + "</html>";
-        return outputLine;
-    }
-
     /**
      * 
      * @param filename
