@@ -4,7 +4,6 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.io.*;
 import java.util.ArrayList;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +25,6 @@ public class HttpServer {
      * @throws IOException
      */
     public void start(String[] args) throws IOException{
-
         while (true) {
 			ServerSocket serverSocket = null;
 			try {
@@ -118,7 +116,6 @@ public class HttpServer {
         JSONObject json = new JSONObject(jsonText);
         return json;
     }
-
     	/**
 	 * Clase encargada de retornar el puerto donde se va dar a ver la pagina
 	 * 
@@ -131,9 +128,6 @@ public class HttpServer {
 
 		return 8080; // returns default port if heroku-port isn't set(i.e. on localhost) }
 	}*/
-
-    
-
     public static void main(String[] args) throws IOException {
         System.out.println(HttpServer.WeatherJSON("new york"));
     }
