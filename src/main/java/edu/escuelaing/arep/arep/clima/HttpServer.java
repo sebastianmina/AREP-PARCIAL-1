@@ -1,26 +1,21 @@
 package edu.escuelaing.arep.arep.clima;
-
 import java.net.*;
 import java.nio.charset.Charset;
 import java.io.*;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 /**
 * La clase HttpServer es la principal clase de api que utliza Open Weather Map para dar el tiempo de cierta ciudad.
 *
 */
 public class HttpServer {
-
     private static final HttpServer _instance = new HttpServer();
     private static final String HTTP_MESSAGE = "HTTP/1.1 200 OK\n" + "Content-Type: #/#\r\n" + "\r\n";
     private static final String WHEATER_QUERY = "https://api.openweathermap.org/data/2.5/weather?q=#&appid=6ff8f8b1dd43268717ea79493222b474";
-
     public static HttpServer getInstance(){
         return _instance;
     }
-
     private HttpServer(){}
 
     /**
@@ -53,7 +48,6 @@ public class HttpServer {
             }
         }
     }
-
     /**
      * Realiza la conexión del servidor.
      * @param clientSocket
@@ -85,7 +79,6 @@ public class HttpServer {
         in.close();
         clientSocket.close();
     }
-
     /**
      * Clase que toma los recursos.
      * @param resourceURI
@@ -96,7 +89,6 @@ public class HttpServer {
         String filename = resourceURI.toString().replaceFirst("/", "");
         return computeHTMLResponse(filename);
     }
-
     /**
      * 
      * @param filename
@@ -105,7 +97,6 @@ public class HttpServer {
     public String computeHTMLResponse(String filename){
         return "";
     }
-
     /**
      * Clase que crea un objeto JSON.
      * @param cityname
