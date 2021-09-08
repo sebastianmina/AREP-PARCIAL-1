@@ -20,11 +20,17 @@ public class HttpServer {
 
     private HttpServer(){}
 
+    /**
+     * Inicializa el servicio.
+     * @param args
+     * @throws IOException
+     */
     public void start(String[] args) throws IOException{
+
         while (true) {
 			ServerSocket serverSocket = null;
 			try {
-				serverSocket = new ServerSocket(getPort());
+				serverSocket = new ServerSocket(8080);
 			} catch (IOException e) {
 				System.err.println("Could not listen on port: 35000.");
 				System.exit(1);
@@ -46,6 +52,12 @@ public class HttpServer {
         }
     }
 
+    /**
+     * Realiza la conexión del servidor.
+     * @param clientSocket
+     * @throws IOException
+     * @throws URISyntaxException
+     */
     public void serverConnection(Socket clientSocket) throws IOException, URISyntaxException {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
@@ -72,15 +84,63 @@ public class HttpServer {
         clientSocket.close();
     }
 
+    /**
+     * Clase que toma los recursos.
+     * @param resourceURI
+     * @return
+     * @throws URISyntaxException
+     */
     public String getResource(URI resourceURI) throws URISyntaxException{
         String filename = resourceURI.toString().replaceFirst("/", "");
         return computeHTMLResponse(filename);
     }
 
+    private String getComponentResource(String uri) throws IOException {
+        if (uri.contains("clima")) {
+            return defaultHttpMessage();
+        } else if (uri.contains("consulta")) {
+            return computeContentComponentResponse(uri);
+        } else {
+            return default404HTMLResponse();
+        }
+    }
+
+    private String computeContentComponentResponse(String uri) {
+        return null;
+    }
+
+    private String default404HTMLResponse() {
+        String outputLine = "HTTP/1.1 404 Not found\r\n" + "Content-Type: text/html\r\n" + "\r\n" + "<!DOCTYPE html>"
+                + "<html>" + " <head>" + "     <title>404 Not Found </title>" + "     <meta charset=\"UTF-8\""
+                + "     <meta name=\"viewport\"" + " </head>" + "<body>" + "     <div><h1>Error 404</h1></div>"
+                + " </body>" + "</html>";
+        return outputLine;
+    }
+
+    private String defaultHttpMessage() {
+        String outputLine = "HTTP/1.1 200 ok\r\n" + "Content-Type: text/html\r\n" + "\r\n" + "<!DOCTYPE html>"
+                + " <html>" + "     <head>" + "         <title> TODO supply a title </title>"
+                + "         <meta charset=\"UTF-8\""
+                + "         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"" + "     </head>"
+                + "     <body>" + "         <div><h1>The Weather</h1></div>" + "</html>";
+        return outputLine;
+    }
+
+    /**
+     * 
+     * @param filename
+     * @return
+     */
     public String computeHTMLResponse(String filename){
         return "";
     }
 
+    /**
+     * Clase que crea un objeto JSON.
+     * @param cityname
+     * @return
+     * @throws IOException
+     */
     public static JSONObject WeatherJSON(String cityname) throws IOException{
         InputStream is = new URL(WHEATER_QUERY.replaceFirst("#", cityname)).openStream();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
@@ -95,16 +155,17 @@ public class HttpServer {
 	 * 
 	 * @return puerto donde inicia la pagina
 	 */
-	static int getPort() {
+	/*static int getPort() {
 		if (System.getenv("PORT") != null) {
 			return Integer.parseInt(System.getenv("PORT"));
 		}
 
 		return 8080; // returns default port if heroku-port isn't set(i.e. on localhost) }
-	}
+	}*/
+
+    
 
     public static void main(String[] args) throws IOException {
         System.out.println(HttpServer.WeatherJSON("new york"));
-        //HttpServer.getInstance().start(args);
     }
 }
